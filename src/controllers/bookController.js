@@ -45,14 +45,8 @@ export const getBookById = async (req, res) => {
 // Create a new book
 export const createBook = async (req, res) => {
   try {
-    // Remove empty ISBN
-    if (req.body.ISBN === "") {
-      delete req.body.ISBN;
-    }
-
     const book = new Book(req.body);
     const savedBook = await book.save();
-
     res.status(201).json({
       success: true,
       message: 'Book created successfully',
@@ -61,11 +55,11 @@ export const createBook = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: error.message,
+      message: 'Error creating book',
+      error: error.message,
     });
   }
 };
-
 
 // Update a book
 export const updateBook = async (req, res) => {
